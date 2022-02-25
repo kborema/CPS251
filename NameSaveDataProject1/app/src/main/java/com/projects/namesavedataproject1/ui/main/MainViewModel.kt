@@ -21,4 +21,8 @@ class MainViewModel : ViewModel() {
         return listOfNames
     }
 
+    fun getNamesCount(): Int {
+        return namesList.size
+    }
+
 }

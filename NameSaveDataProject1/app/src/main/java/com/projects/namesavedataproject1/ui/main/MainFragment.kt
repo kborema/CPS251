@@ -38,14 +38,16 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        binding.displayNames.text = viewModel.getNamesList()
+        if (viewModel.getNamesCount() > 0) {
+            binding.displayNames.text = viewModel.getNamesList()
+        } else {
+            binding.displayNames.text = "No names to display"
+        }
 
         binding.addNameBtn.setOnClickListener {
             if (binding.editTextName.text.isNotEmpty()) {
                 viewModel.addName(binding.editTextName.text.toString())
                 binding.displayNames.text = viewModel.getNamesList()
-            } else {
-                binding.displayNames.text = "No names to display"
             }
         }
     }
