@@ -5,32 +5,31 @@ import androidx.lifecycle.MutableLiveData
 import android.util.Log
 
 class MainViewModel : ViewModel() {
-    private var nameText = ""
     private var namesList = arrayListOf<String>()
-    private var namesResult: MutableLiveData<String> = MutableLiveData()
+    var nameValue: MutableLiveData<String> = MutableLiveData()
+    var namesResult: MutableLiveData<String> = MutableLiveData()
 
-    fun addName(name: String) {
-        this.nameText = name
-        this.namesList.add(name)
-        namesResult.setValue(convertArrayListToString(this.namesList))
+    fun addNameToList() {
+        nameValue.let {
+            if (!it.value.equals("")) {
+                this.namesList.add(it.value.toString())
+                namesResult.value = convertArrayListToString()
+            } else {
+                namesResult.value = convertArrayListToString()
+            }
+        }
     }
 
-    private fun convertArrayListToString(arrayList: ArrayList<String>): String {
+    private fun convertArrayListToString(): String {
         var stringList = ""
 
-        if (arrayList.size > 0) {
-            for (name in arrayList) {
+        if (this.namesList.size > 0) {
+            for (name in this.namesList) {
                 stringList += name + "\n"
             }
-        } else {
-            stringList = "No names to display"
         }
 
         return stringList
-    }
-
-    fun getNamesList(): MutableLiveData<String> {
-        return namesResult
     }
 
 }
