@@ -36,7 +36,7 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         binding.setVariable(myViewModel, viewModel)
-        lifecycle.addObserver(DemoObserver())
+        lifecycle.addObserver(DemoObserver(viewModel))
     }
 
 }

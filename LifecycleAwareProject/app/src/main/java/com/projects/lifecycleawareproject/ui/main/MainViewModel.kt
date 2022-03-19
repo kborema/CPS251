@@ -2,20 +2,21 @@ package com.projects.lifecycleawareproject.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
-import android.util.Log
+import java.time.LocalTime
 
 class MainViewModel : ViewModel() {
     private var lifeCycleList = arrayListOf<String>()
     var lifecycleOutputText: MutableLiveData<String> = MutableLiveData()
+    val requiresDividerList = arrayListOf("onResume", "onPause", "onDestroy")
 
     fun addLifecycleToOutputText(lifecycleText : String) {
-        Log.i("MainViewModel", "inside addLifecycleToOutputText: " + lifecycleText)
-        Log.i("MainViewModel", "starting outputText value: " + this.lifecycleOutputText.toString())
-        this.lifeCycleList.add(lifecycleText)
-        this.lifecycleOutputText.value = convertArrayListToString()
+        var stringToAdd = lifecycleText + " was fired on " + LocalTime.now()
+        if (requiresDividerList.contains(lifecycleText)) {
+            stringToAdd += "\n**********"
+        }
 
-        Log.i("MainViewModel", "ending outputText value: " + this.lifecycleOutputText.toString())
-        Log.i("MainViewModel", "end of addLifecycleToOutputText")
+        this.lifeCycleList.add(stringToAdd)
+        this.lifecycleOutputText.value = convertArrayListToString()
     }
 
     private fun convertArrayListToString(): String {
@@ -26,8 +27,6 @@ class MainViewModel : ViewModel() {
                 stringList += lifecycle + "\n"
             }
         }
-
-        Log.i("MainViewModel", "inside convert:" + "\n" + stringList)
         return stringList
     }
 }

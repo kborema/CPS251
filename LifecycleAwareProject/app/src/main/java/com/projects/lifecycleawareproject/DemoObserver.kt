@@ -6,10 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.projects.lifecycleawareproject.ui.main.MainViewModel
 
-class DemoObserver : LifecycleObserver{
-
-    var viewModel: MainViewModel = MainViewModel()
-
+class DemoObserver(val viewModel: MainViewModel) : LifecycleObserver{
 
     private val LOG_TAG = "DemoObserver"
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -43,8 +40,4 @@ class DemoObserver : LifecycleObserver{
         viewModel.addLifecycleToOutputText("onDestroy")
     }
 
-//    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-//    fun onAny(owner: LifecycleOwner, event: Lifecycle.Event) {
-//        Log.i(LOG_TAG, owner.lifecycle.currentState.name)
-//    }
 }
