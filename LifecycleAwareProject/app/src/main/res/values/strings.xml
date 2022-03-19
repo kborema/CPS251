@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LifecycleAwareProject</string>
+    <string name="LifecycleTextOutput">Nothing to display</string>
+    <string name="output">Nothing to display</string>
+</resources>

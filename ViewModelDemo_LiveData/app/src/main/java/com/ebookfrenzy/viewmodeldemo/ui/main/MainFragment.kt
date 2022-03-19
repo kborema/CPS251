@@ -39,8 +39,8 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        val resultObserver = Observer<Float> {
-            result -> binding.resultText.text = result.toString()
+        val resultObserver = Observer<Float> { result ->
+            binding.resultText.text = result.toString()
         }
 
         viewModel.getResult().observe(viewLifecycleOwner, resultObserver)
@@ -53,5 +53,4 @@ class MainFragment : Fragment() {
             }
         }
     }
-
 }
