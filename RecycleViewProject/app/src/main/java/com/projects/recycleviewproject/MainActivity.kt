@@ -12,6 +12,7 @@ import android.view.MenuItem
 import com.projects.recycleviewproject.databinding.ActivityMainBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,10 +23,12 @@ class MainActivity : AppCompatActivity() {
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i("MainActivity", "inside onCreate");
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         setSupportActionBar(binding.toolbar)
 
