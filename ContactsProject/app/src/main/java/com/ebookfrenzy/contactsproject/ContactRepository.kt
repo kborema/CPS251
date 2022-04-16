@@ -4,13 +4,15 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
+import android.util.Log
 
 class ContactRepository(application: Application) {
 
     val searchResults = MutableLiveData<List<Contact>>()
     private var contactDao: ContactDao?
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
-    var allContacts: LiveData<List<Contact>>?
+    val allContacts: LiveData<List<Contact>>?
+    val noResultsFound = MutableLiveData<Boolean>()
 
     init {
         val db: ContactRoomDatabase? =
@@ -39,8 +41,15 @@ class ContactRepository(application: Application) {
 
     fun findContact(name: String) {
         coroutineScope.launch(Dispatchers.Main) {
-            searchResults.value = asyncFind(name).await()
+            var findResults = asyncFind(name).await()
+            if (findResults.isNullOrEmpty()) {
+                noResultsFound.value = true
+            }
+            else {
+                searchResults.value = findResults!!
+            }
         }
+        noResultsFound.value = false
     }
     private suspend fun asyncFind(name: String): Deferred<List<Contact>?> =
         coroutineScope.async(Dispatchers.IO) {

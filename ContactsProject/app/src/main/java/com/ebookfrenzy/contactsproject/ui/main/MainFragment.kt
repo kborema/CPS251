@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebookfrenzy.contactsproject.Contact
 import androidx.fragment.app.viewModels
 import android.util.Log
+import android.widget.Toast
 
 import java.util.*
 
@@ -57,12 +58,18 @@ class MainFragment : Fragment(), OnDeleteClickListener {
                 viewModel.insertContact(product)
                 clearFields()
             } else {
-                //binding.productID.text = "Incomplete information"
-                Log.i("KatieDebug", "Incomplete Information, should be toast!!")
+                val message = "Incomplete information. Please enter a name and phone number."
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
             }
         }
         binding.findButton.setOnClickListener {
-            viewModel.findContact(binding.enterName.text.toString())
+            val searchText = binding.enterName.text.toString()
+            if (searchText != "") {
+                viewModel.findContact(searchText)
+            } else {
+                val message = "Please enter search criteria in the 'Enter Name' field."
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
         }
         binding.ascButton.setOnClickListener {
             viewModel.getAllContactAsc()
@@ -84,6 +91,15 @@ class MainFragment : Fragment(), OnDeleteClickListener {
             contacts?.let {
                 Log.i("KatieDebug", "MainFragment inside getSearchResults()?.observe")
                 adapter?.setContactList(it)
+            }
+        })
+
+        viewModel.getNoResultsFound().observe(viewLifecycleOwner, { noResult ->
+            noResult?.let {
+                if(it) {
+                    val message = "No contacts found. Please try entering different search criteria."
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                }
             }
         })
     }
