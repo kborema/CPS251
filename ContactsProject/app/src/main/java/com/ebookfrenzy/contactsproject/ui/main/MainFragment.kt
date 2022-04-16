@@ -17,7 +17,7 @@ import java.util.*
 import com.ebookfrenzy.contactsproject.databinding.MainFragmentBinding
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), OnDeleteClickListener {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -58,7 +58,7 @@ class MainFragment : Fragment() {
                 clearFields()
             } else {
                 //binding.productID.text = "Incomplete information"
-                Log.i("MainFragment", "Incomplete Information, should be toast!!")
+                Log.i("KatieDebug", "Incomplete Information, should be toast!!")
             }
         }
         binding.findButton.setOnClickListener {
@@ -73,17 +73,29 @@ class MainFragment : Fragment() {
     }
 
     private fun observerSetup() {
-        viewModel.getAllContacts()?.observe(this, Observer { contacts ->
+        viewModel.getAllContacts()?.observe(viewLifecycleOwner, Observer { contacts ->
             contacts?.let {
+                Log.i("KatieDebug", "MainFragment inside getAllContacts()?.observe")
+                adapter?.setContactList(it)
+            }
+        })
+
+        viewModel.getSearchResults().observe(viewLifecycleOwner, Observer { contacts ->
+            contacts?.let {
+                Log.i("KatieDebug", "MainFragment inside getSearchResults()?.observe")
                 adapter?.setContactList(it)
             }
         })
     }
 
     private fun recyclerSetup() {
-        adapter = ContactListAdapter(R.layout.contact_card_layout)
+        adapter = ContactListAdapter(R.layout.contact_card_layout, this)
         binding.contactRecycler.layoutManager = LinearLayoutManager(context)
         binding.contactRecycler.adapter = adapter
+    }
+
+    override fun onDeleteIconClick(contactId: Int) {
+        viewModel.deleteContact(contactId)
     }
 
 }

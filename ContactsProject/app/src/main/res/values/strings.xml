@@ -6,4 +6,6 @@
     <string name="find">FIND</string>
     <string name="asc">ASC</string>
     <string name="desc">DESC</string>
+    <string name="delete_icon">Delete</string>
+    <string name="contactId">ID</string>
 </resources>

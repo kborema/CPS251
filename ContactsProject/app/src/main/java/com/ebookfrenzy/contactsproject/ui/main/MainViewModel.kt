@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ebookfrenzy.contactsproject.Contact
 import com.ebookfrenzy.contactsproject.ContactRepository
+import android.util.Log
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: ContactRepository = ContactRepository(application)
@@ -29,17 +30,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getSearchResults(): MutableLiveData<List<Contact>> {
         return searchResults
     }
+
     fun getAllContacts(): LiveData<List<Contact>>? {
         return allContacts
     }
-    fun getAllContactAsc(): LiveData<List<Contact>>? {
+
+    fun getAllContactAsc(){
         repository.getAscContacts()
-        allContacts = repository.allContacts
-        return allContacts
     }
-    fun getAllContactDesc(): LiveData<List<Contact>>? {
+
+    fun getAllContactDesc() {
         repository.getDescContacts()
-        allContacts = repository.allContacts
-        return allContacts
+
     }
 }

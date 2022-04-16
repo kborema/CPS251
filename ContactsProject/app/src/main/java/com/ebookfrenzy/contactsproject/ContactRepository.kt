@@ -49,20 +49,20 @@ class ContactRepository(application: Application) {
 
     fun getAscContacts() {
         coroutineScope.launch(Dispatchers.Main) {
-            allContacts = asyncGetAsc().await()
+            searchResults.value = asyncGetAsc().await()
         }
     }
-    private suspend fun asyncGetAsc(): Deferred<LiveData<List<Contact>>?> =
+    private suspend fun asyncGetAsc(): Deferred<List<Contact>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async contactDao?.getAscendingContacts()
     }
 
     fun getDescContacts() {
         coroutineScope.launch(Dispatchers.Main) {
-            allContacts = asyncGetDesc().await()
+            searchResults.value = asyncGetDesc().await()
         }
     }
-    private suspend fun asyncGetDesc(): Deferred<LiveData<List<Contact>>?> =
+    private suspend fun asyncGetDesc(): Deferred<List<Contact>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async contactDao?.getDescendingContacts()
         }

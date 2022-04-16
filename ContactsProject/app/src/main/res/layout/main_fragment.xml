@@ -19,20 +19,21 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/enter_name"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:text="@string/enter_name"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            tools:ignore="TextContrastCheck" />
 
         <EditText
             android:id="@+id/enterNumber"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/enter_number"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:text="@string/enter_number"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:inputType="phone"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </LinearLayout>
 

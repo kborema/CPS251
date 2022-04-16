@@ -1,6 +1,7 @@
 package com.ebookfrenzy.contactsproject
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -20,8 +21,8 @@ interface ContactDao {
     fun getAllContacts(): LiveData<List<Contact>>
 
     @Query("SELECT * FROM contacts ORDER BY contactName ASC")
-    fun getAscendingContacts(): LiveData<List<Contact>>
+    fun getAscendingContacts(): List<Contact>
 
     @Query("SELECT * FROM contacts ORDER BY contactName DESC")
-    fun getDescendingContacts(): LiveData<List<Contact>>
+    fun getDescendingContacts(): List<Contact>
 }
